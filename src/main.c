@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:52:24 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/18 18:10:11 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:31:53 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,26 @@
 int	main(int ac, char **av)
 {
 	int	i;
-    pthread_mutex_t mutex;
+    t_data data;
+    // pthread_mutex_t mutex;
 	i = 0;
-	if (ac != 5)
-		return (printf("Invalid number of argument\n"), 2);
-	if (parsing_argument(av))
-		return (0);
-	if(pthread_create(th[i],) && pthread_mutex_init())
-    {
+    (void)i;
+	if (ac != 6 && ac != 5)
+		return (printf("Invalid number of argument\n"), 1);
+	if (parsing_argument(av,&data) != 0)
+		return (printf("Invalid argument\n"),1);
+    // printf ("philo= %ld\ntd= %ld\nte= %ld\n ts= %ld\nnftepme= %ld\n 6th argument %d\n", data.philo, data.td, data.te, data.ts, data.nftepme, data.flag);
+    // init_struct();
+
+	// if(pthread_create(th[i],) && pthread_mutex_init())
+    // {
         
-    }
-    if(pthread_join())
-    {
+    // }
+    // if(pthread_join())
+    // {
         
-    }
-    pthread_mutex_destroy();
+    // }
+    // pthread_mutex_destroy();
     return (0);
 }
 

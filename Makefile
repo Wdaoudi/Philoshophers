@@ -6,40 +6,35 @@
 #    By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 19:24:45 by wdaoudi-          #+#    #+#              #
-#    Updated: 2024/12/16 19:25:57 by wdaoudi-         ###   ########.fr        #
+#    Updated: 2024/12/19 13:27:27 by wdaoudi-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-SRCS = $(addprefix src/,  )
+SRCS = $(addprefix src/, main.c parsing.c utils.c)
 
 INCLUDES = ./includes
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -g3 
+CFLAGS = -Wall -Wextra -Werror -g3
 
 NAME = philo
 
-all : $(NAME)
+all: $(NAME)
 
-%.o : %.c
-	$(CC) $(CFLAGS) -I $(INCLUDES) -c  $< -o $@ 
+%.o: %.c
+	$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
 
-$(LIBFT):
-	make -C ./libft
-
-$(NAME):  $(OBJS)
-	$(CC) $(CFLAGS) -I $(INCLUDES)  $(OBJS) -o $(NAME) 
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -I $(INCLUDES) $(OBJS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
-	make clean -C 
 
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C
 
 re: fclean all
 
