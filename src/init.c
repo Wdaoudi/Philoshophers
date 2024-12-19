@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/19 20:13:26 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:23:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,20 @@ int	init_monitor(t_data *data, t_monitor *monitor)
 	return (0);
 }
 
-void	init_threads(t_monitor *monitor)
+int	init_threads(t_monitor *monitor)
 {
-	int i = 0;
-	pthread_t th[monitor->data->philo];
-	t_philo *current;
-	
+	int	i;
+
+	i = 0;
+	// pthread_t th[monitor->data->philo];
 	while (i < monitor->data->philo)
 	{
-		if (pthread_create(th[i], NULL, &routine, NULL) != 0)
+		monitor->philos
+		if (pthread_create(th[i], NULL, &test /*&routine*/, NULL) != 0)
 		{
 			printf("failed to create thread\n");
 			return (1);
 		}
-		monitor->first->thread = th[i];
-
 		i++;
 	}
 	while (i > 0)
@@ -110,4 +109,10 @@ void	init_threads(t_monitor *monitor)
 		}
 		i--;
 	}
+	return (0);
+}
+
+void	test(void)
+{
+	printf("dans test\n");
 }
