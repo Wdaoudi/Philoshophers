@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/19 18:03:37 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:10:58 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_list_philo(t_monitor *monitor)
 	if (monitor->first->next)
 	{
 		current = monitor->first->next;
-		while (current) //gerer le cas ou il y a doublement chainee
+		while (current)
 		{
 			printf("philo id = %d\n", current->id);
 			current = current->next;
@@ -62,4 +62,13 @@ void	ft_free_all(t_monitor *monitor)
 			free(current);
 		free(monitor);
 	}
+}
+
+size_t	get_current_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

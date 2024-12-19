@@ -38,7 +38,7 @@ int	main(int ac, char **av)
 {
 	pthread_t th[4];
     int i = 0;
-    // pthread create return un int si != 0 alors echec de la creation du threads
+    // pthread create return un int, si != 0 alors echec de la creation du threads
     pthread_mutex_init(&mutex,NULL);
     while (i < 4)
     {

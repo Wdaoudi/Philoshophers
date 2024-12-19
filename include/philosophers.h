@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/19 17:57:43 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:12:17 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_monitor
 {
 	// a gerer
 	struct s_philo	*first;
-	pthread_mutex_t	*die;
-	pthread_mutex_t	*print;
+	pthread_mutex_t	die;
+	pthread_mutex_t	print;
 	bool			is_die;
 	t_data			*data;
 
@@ -55,13 +55,13 @@ typedef struct s_monitor
 
 typedef struct s_philo
 {
-	pthread_mutex_t	*fork;
-	pthread_t		thread;
-	int				id;
-	int				number_of_meal;
-	int				last_meal_time;
-
-	struct s_philo	*next;
+	pthread_mutex_t fork; 
+	pthread_t thread;     // a gerer apres via voir plus bas
+	int id;              
+	int number_of_meal;  
+	int last_meal_time;   
+	size_t			starting_time;
+	struct s_philo *next;
 }					t_philo;
 
 /* parsing */
@@ -76,15 +76,17 @@ int					is_only_space(char *str);
 
 /* list creation*/
 
-int				create_philo_list(t_monitor *monitor);
+int					create_philo_list(t_monitor *monitor);
 void				add_to_list(t_monitor *monitor, t_philo *new);
 t_philo				*create_philo(t_monitor *monitor, int i);
+int					init_monitor(t_data *data, t_monitor *monitor);
+void				init_threads(t_monitor *monitor);
 
 /* utils*/
 
 void				ft_putstr_fd(char *s, int fd);
 void				ft_free_all(t_monitor *monitor);
-
+size_t				get_current_time(void);
 /* test*/
 void				print_list_philo(t_monitor *monitor);
 
@@ -114,6 +116,8 @@ time_to_think = (time_to_die - (get_time_in_ms() - philo->last_meal)
 		- time_to_eat) / 2
 necessaire pour laisser certains philo manger. mais pas superieur
 a 500 / 600 ms
+
+
 */
 
 #endif
