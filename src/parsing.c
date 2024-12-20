@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:53:50 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/20 11:21:21 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:52:00 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	parsing_argument(char **av, t_data *data)
 
 	i = 0;
 	// res = 0;
-	while (av[i++])
-		printf("av[%d] = %s\n", i, av[i]);
+	// while (av[i++])
+	// 	printf("av[%d] = %s\n", i, av[i]);
 	i = 1;
 	while (av[i])
 	{

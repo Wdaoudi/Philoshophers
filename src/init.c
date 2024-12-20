@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/20 12:35:48 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:50:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,6 @@ int	create_philo_list(t_monitor *monitor)
 
 int	init_monitor(t_data *data, t_monitor *monitor)
 {
-	// pthread_mutex_t	die;
-	// pthread_mutex_t	print;
-
 	monitor->data = data;
 	monitor->is_die = false;
 	monitor->first = NULL;
@@ -103,8 +100,6 @@ int	init_monitor(t_data *data, t_monitor *monitor)
 	{
 		return (1);
 	}
-	// monitor->die = die;
-	// monitor->print = print;
 	return (0);
 }
 
@@ -115,7 +110,7 @@ int	init_threads(t_monitor *monitor)
 	current = monitor->first;
 	while (current)
 	{
-		if (pthread_create(&current->thread, NULL, (void*)test /*&routine*/,
+		if (pthread_create(&current->thread, NULL, (void *)test /*&routine*/,
 				current) != 0)
 		{
 			printf("Failed to create thread for philo %d\n", current->id);
