@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:52:24 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/19 20:07:05 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:02:46 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	main(int ac, char **av)
 		return (printf("Error\nCreating philosophers\n"), 1);
 	if (create_philo_list(&monitor) != 0)
 		return (printf("Error\nCreating philosophers\n"), 1);
+	if (assign_forks(&monitor) != 0)
+		return (1);
+	
 	print_list_philo(&monitor);
 	init_threads(&monitor);
 	// pthread_mutex_destroy();

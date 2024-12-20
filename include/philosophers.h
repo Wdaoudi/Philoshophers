@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/19 20:19:48 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:22:18 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_monitor
 	struct s_philo	*first;
 	pthread_mutex_t	die;
 	pthread_mutex_t	print;
+	pthread_mutex_t	meal_check;
 	bool			is_die;
 	t_data			*data;
 
@@ -54,12 +55,16 @@ typedef struct s_monitor
 
 typedef struct s_philo
 {
-	pthread_mutex_t fork; 
-	int id;              
-	int number_of_meal;  
-	int last_meal_time;   
+	pthread_t		thread;
+	pthread_mutex_t	fork;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
+	int				id;
+	int				number_of_meal;
+	int				last_meal_time;
 	size_t			starting_time;
-	struct s_philo *next;
+	t_monitor		*monitor;
+	struct s_philo	*next;
 }					t_philo;
 
 /* parsing */
@@ -78,7 +83,10 @@ int					create_philo_list(t_monitor *monitor);
 void				add_to_list(t_monitor *monitor, t_philo *new);
 t_philo				*create_philo(t_monitor *monitor, int i);
 int					init_monitor(t_data *data, t_monitor *monitor);
-int				init_threads(t_monitor *monitor);
+int					init_threads(t_monitor *monitor);
+
+/* thread + mutex*/
+int					assign_forks(t_monitor *monitor);
 
 /* utils*/
 
@@ -87,6 +95,7 @@ void				ft_free_all(t_monitor *monitor);
 size_t				get_current_time(void);
 /* test*/
 void				print_list_philo(t_monitor *monitor);
+void				test(void);
 
 /*
 strcture table: avec dedans un  mutex pour le printf et
