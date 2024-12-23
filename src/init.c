@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 19:56:50 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:18:30 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_philo	*create_philo(t_monitor *monitor, int i)
 	new->next = NULL;
 	new->number_of_meal = 0;
 	new->starting_time = monitor->data->starting_time;
-	new->last_meal_time = new->starting_time;
+	new->last_meal_time = monitor->data->starting_time;
 	new->monitor = monitor;
 	new->l_fork = NULL;
 	new->r_fork = NULL;
@@ -93,8 +93,9 @@ int	create_philo_list(t_monitor *monitor)
 int	init_monitor(t_data *data, t_monitor *monitor)
 {
 	monitor->data = data;
-	monitor->is_die = false;
+	monitor->is_die = CONTINUE;
 	monitor->first = NULL;
+	monitor->data->starting_time = get_current_time();
 	if (pthread_mutex_init(&monitor->die, NULL) != 0
 		|| pthread_mutex_init(&monitor->print, NULL) != 0)
 	{

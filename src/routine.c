@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 19:52:34 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:25:43 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	*routine(void *arg)
 {
 	t_philo	*philo;
-
 	philo = (t_philo *)arg;
-	// Implémentation de la routine du philosophe
 	while (1)
 	{
 		if (eat(philo) == FINISH)
@@ -27,6 +25,8 @@ void	*routine(void *arg)
 			break ;
 		if (ft_sleep(philo) == FINISH)
 			break ;
+		think(philo);
+		printf("boucle dans la routine\n");
 		// think
 		// if (philo->monitor->data->philo % 2 == 0)
 		// {
@@ -76,8 +76,7 @@ t_state	eat(t_philo *philo)
 	if (take_fork(philo) == FINISH)
 		return (FINISH);
 	ft_printf(philo, EATING);
-	philo->last_meal_time = get_current_time()
-		- philo->monitor->data->starting_time;
+	philo->last_meal_time = get_current_time();
 	usleep(philo->monitor->data->te);
 	philo->number_of_meal += 1;
 	if (check_if_dead(philo) == FINISH)
@@ -137,9 +136,9 @@ t_state	check_if_dead(t_philo *philo)
 {
 	long actual_time;
 
-	actual_time = get_current_time();
 	if (get_simulation_state(philo) == FINISH)
 		return (FINISH);
+	actual_time = get_current_time();
 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
 		return (set_simulation_finish(philo));
 	return (CONTINUE);

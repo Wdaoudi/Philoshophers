@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 19:56:36 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:25:26 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 	int				id;
 	int				number_of_meal;
-	int				last_meal_time;
+	long long				last_meal_time;
 	long			starting_time;
 	t_monitor		*monitor;
 	struct s_philo	*next;
