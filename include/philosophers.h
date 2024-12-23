@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 14:36:11 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:04:02 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@
 // 	sa fourchette pour eviter les deadlocks */
 // }						t_fork;
 
+typedef enum s_state
+{
+	CONTINUE,
+	FINISH,
+} t_state;
+
+# define FORK "has taken a fork"
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
+
 typedef struct s_data
 {
 	char			**av;
@@ -47,9 +58,9 @@ typedef struct s_monitor
 {
 	struct s_philo	*first;
 	pthread_mutex_t	die;
+	t_state			is_die;
 	pthread_mutex_t	print;
 	pthread_mutex_t	meal_check;
-	bool			is_die;
 	t_data			*data;
 
 }					t_monitor;
@@ -63,7 +74,7 @@ typedef struct s_philo
 	int				id;
 	int				number_of_meal;
 	int				last_meal_time;
-	size_t			starting_time;
+	long			starting_time;
 	t_monitor		*monitor;
 	struct s_philo	*next;
 }					t_philo;
@@ -94,6 +105,7 @@ int					assign_forks(t_monitor *monitor);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_free_all(t_monitor *monitor);
 size_t				get_current_time(void);
+t_state				set_simulation_finish(t_philo *philo);
 
 /* test*/
 
