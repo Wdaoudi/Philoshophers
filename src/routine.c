@@ -6,13 +6,13 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 15:01:42 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:16:39 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
-void	routine(void *arg)
+void	*routine(void *arg)
 {
 	t_philo *philo;
 
@@ -23,5 +23,4 @@ void	routine(void *arg)
 		// Logique du philosophe (manger, dormir, penser)
 	}
 	return (NULL);
-	// printf("test\n");
 }
