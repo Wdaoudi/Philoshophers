@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 17:23:48 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:53:58 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ size_t	get_current_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	ft_usleep(t_philo *philo, long time)
-{
-	usleep(time);
-	return (0);
-}
+// int	ft_usleep(t_philo *philo, long time)
+// {
+// 	usleep(time);
+// 	return (0);
+// }

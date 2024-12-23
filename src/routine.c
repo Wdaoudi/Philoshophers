@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 19:13:10 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:52:34 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	*routine(void *arg)
 
 t_state	take_fork(t_philo *philo)
 {
+	if (check_if_dead(philo) == FINISH)
+		return (FINISH);
 	if (pthread_mutex_lock(philo->r_fork) != 0)
 		return (set_simulation_finish(philo));
 	if (check_if_dead(philo) == FINISH)
@@ -95,22 +97,20 @@ t_state	think(t_philo *philo)
 
 t_state	ft_sleep(t_philo *philo)
 {
-	long	timestamp;
+	// long	timestamp;
 
+	// if (check_if_dead(philo) == FINISH)
+	// 	return (FINISH);
+	// if (pthread_mutex_lock(&philo->monitor->print) == FINISH)
+	// 	return (FINISH);
 	if (check_if_dead(philo) == FINISH)
 		return (FINISH);
-	if (pthread_mutex_lock(&philo->monitor->print) == FINISH)
-		return (FINISH);
-	if (check_if_dead(philo) == FINISH)
-		return (pthread_mutex_unlock(&philo->monitor->print), FINISH);
-	timestamp = get_current_time();
-	timestamp = timestamp - philo->starting_time;
+	// timestamp = get_current_time();
+	// timestamp = timestamp - philo->starting_time;
 	if (ft_printf(philo, SLEEPING) == FINISH)
-		return (pthread_mutex_unlock(&philo->monitor->print), FINISH);
+		return (FINISH);
 	usleep(philo->monitor->data->ts);
 	if (check_if_dead(philo) == FINISH)
-		return (pthread_mutex_unlock(&philo->monitor->print), FINISH);
-	if (pthread_mutex_unlock(&philo->monitor->print) == FINISH)
 		return (FINISH);
 	return (CONTINUE);
 }

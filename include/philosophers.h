@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 18:04:02 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:56:36 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,26 @@ int					init_threads(t_monitor *monitor);
 
 /* thread + mutex*/
 int					assign_forks(t_monitor *monitor);
+t_state				set_simulation_finish(t_philo *philo);
+
+/* routine */
+
+void	*routine(void *arg);
+t_state	eat(t_philo *philo);
+t_state	take_fork(t_philo *philo);
+t_state	think(t_philo *philo);
+t_state	ft_sleep(t_philo *philo);
+
 
 /* utils*/
 
 void				ft_putstr_fd(char *s, int fd);
 void				ft_free_all(t_monitor *monitor);
 size_t				get_current_time(void);
-t_state				set_simulation_finish(t_philo *philo);
+t_state	set_simulation_finish(t_philo *philo);
+t_state	get_simulation_state(t_philo *philo);
+t_state	check_if_dead(t_philo *philo);
+t_state	ft_printf(t_philo *philo, char *message);
 
 /* test*/
 

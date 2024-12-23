@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 18:54:58 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:56:50 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	init_threads(t_monitor *monitor)
 	current = monitor->first;
 	while (current)
 	{
-		if (pthread_create(&current->thread, NULL, &test /*&routine*/,
+		if (pthread_create(&current->thread, NULL,&routine,
 				(void *)current) != 0)
 		{
 			printf("Failed to create thread for philo %d\n", current->id);
