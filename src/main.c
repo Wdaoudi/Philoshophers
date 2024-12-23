@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:52:24 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/20 12:02:46 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:50:23 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int ac, char **av)
 	
 	print_list_philo(&monitor);
 	init_threads(&monitor);
+	// destroy_all();
 	// pthread_mutex_destroy();
 	return (0);
 }

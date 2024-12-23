@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:53:50 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/20 12:52:00 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:37:06 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	fill_data(t_data *data)
 	data->td = ft_atoi_spe(data->av[2]);
 	data->te = ft_atoi_spe(data->av[3]);
 	data->ts = ft_atoi_spe(data->av[4]);
+	data->starting_time = get_current_time();
 	if (data->av[5])
 	{
 		data->nftepme = ft_atoi_spe(data->av[5]);

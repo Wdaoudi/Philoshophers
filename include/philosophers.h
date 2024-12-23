@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/20 12:22:18 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:36:11 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@
 typedef struct s_data
 {
 	char			**av;
-	long			philo;
-	long			td;
-	long			te;
-	long			ts;
-	long			nftepme;
-	bool			flag;
+	long			philo; // number_of_philo (1)
+	long			td; // time_to_die (2)
+	long			te; // time_to_eat (3)
+	long			ts; // time_to_sleep (4)
+	long			nftepme; // number_of_meal (5)
+	bool			flag; // if there is a number of meal necesssaire before end ("6")
+	long			starting_time;
 }					t_data;
 
 typedef struct s_monitor
@@ -93,9 +94,11 @@ int					assign_forks(t_monitor *monitor);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_free_all(t_monitor *monitor);
 size_t				get_current_time(void);
+
 /* test*/
+
 void				print_list_philo(t_monitor *monitor);
-void				test(void);
+void				*test(void *arg);
 
 /*
 strcture table: avec dedans un  mutex pour le printf et

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/20 11:56:53 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:56:35 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ size_t	get_current_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
-		write(2, "gettimeofday() error\n", 22);
+		return(write(2, "gettimeofday() error\n", 22), 0);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
