@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 20:25:43 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:04:24 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	*routine(void *arg)
 {
 	t_philo	*philo;
+
 	philo = (t_philo *)arg;
 	while (1)
 	{
@@ -22,11 +23,14 @@ void	*routine(void *arg)
 			break ;
 		if (philo->monitor->data->flag == true
 			&& philo->number_of_meal == philo->monitor->data->nftepme)
+		{
+			printf("dead or finish eating\n");
 			break ;
+		}
 		if (ft_sleep(philo) == FINISH)
 			break ;
 		think(philo);
-		printf("boucle dans la routine\n");
+		// printf("boucle dans la routine\n");
 		// think
 		// if (philo->monitor->data->philo % 2 == 0)
 		// {
@@ -97,7 +101,6 @@ t_state	think(t_philo *philo)
 t_state	ft_sleep(t_philo *philo)
 {
 	// long	timestamp;
-
 	// if (check_if_dead(philo) == FINISH)
 	// 	return (FINISH);
 	// if (pthread_mutex_lock(&philo->monitor->print) == FINISH)
@@ -139,6 +142,8 @@ t_state	check_if_dead(t_philo *philo)
 	if (get_simulation_state(philo) == FINISH)
 		return (FINISH);
 	actual_time = get_current_time();
+	printf("actual time by phil[%d] and time is %lu\n", philo->id, (actual_time
+			- philo->starting_time) / 1000);
 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
 		return (set_simulation_finish(philo));
 	return (CONTINUE);

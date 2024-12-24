@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 20:18:30 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:02:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	init_monitor(t_data *data, t_monitor *monitor)
 	return (0);
 }
 
-int	init_threads(t_monitor *monitor)
+int	init_threads(t_monitor *monitor)	
 {
 	t_philo	*current;
 
