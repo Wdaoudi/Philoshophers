@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/24 15:02:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:57:16 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,22 @@ int	init_monitor(t_data *data, t_monitor *monitor)
 	monitor->first = NULL;
 	monitor->data->starting_time = get_current_time();
 	if (pthread_mutex_init(&monitor->die, NULL) != 0
-		|| pthread_mutex_init(&monitor->print, NULL) != 0)
+		|| pthread_mutex_init(&monitor->print, NULL) != 0
+		|| pthread_mutex_init(&monitor->meal_check, NULL) != 0)
 	{
 		return (1);
 	}
 	return (0);
 }
 
-int	init_threads(t_monitor *monitor)	
+int	init_threads(t_monitor *monitor)
 {
 	t_philo	*current;
 
 	current = monitor->first;
 	while (current)
 	{
-		if (pthread_create(&current->thread, NULL,&routine,
+		if (pthread_create(&current->thread, NULL, &routine,
 				(void *)current) != 0)
 		{
 			printf("Failed to create thread for philo %d\n", current->id);
@@ -141,7 +142,7 @@ int	init_threads(t_monitor *monitor)
 // 	long time_remaining;
 
 // 	(void)time_remaining;
-// 	// envois dans la fonction de (void *)current qui correspond 
+// 	// envois dans la fonction de (void *)current qui correspond
 // 	// a t_philo caste en void* puis recaste en dessous;
 // 	philo = (t_philo *)arg; // on remet arg en t_philo *
 // 	current_time = get_current_time();

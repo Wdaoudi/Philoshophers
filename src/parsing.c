@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:53:50 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/23 20:34:42 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:30:36 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	parsing_argument(char **av, t_data *data)
 void	fill_data(t_data *data)
 {
 	data->philo = ft_atoi_spe(data->av[1]);
-	data->td = ft_atoi_spe(data->av[2]) * 1000; // passage de microseconde en milliseconde
-	data->te = ft_atoi_spe(data->av[3]) * 1000;
-	data->ts = ft_atoi_spe(data->av[4]) * 1000;
-	data->starting_time = get_current_time();
+	data->td = ft_atoi_spe(data->av[2]); //en milliseconde
+	data->te = ft_atoi_spe(data->av[3]);//en milliseconde
+	data->ts = ft_atoi_spe(data->av[4]);//en milliseconde
+	data->starting_time = get_current_time();//en milliseconde
 	if (data->av[5])
 	{
 		data->nftepme = ft_atoi_spe(data->av[5]);

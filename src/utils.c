@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/24 14:52:14 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:11:06 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,14 @@ void	ft_free_all(t_monitor *monitor)
 			free(current);
 		free(monitor);
 	}
+	pthread_mutex_destroy(&monitor->die);
+	pthread_mutex_destroy(&monitor->print);
+	pthread_mutex_destroy(&monitor->meal_check);
+	// pthread_mutex_destroy(&monitor->first->fork);// boucler pour les philos
+	// pthread_mutex_destroy(&monitor->first->l_fork); // boucler pour les philos
+	// pthread_mutex_destroy(&monitor->first->r_fork);// boucler pour les philos
+	
+
 }
 
 size_t	get_current_time(void)
@@ -71,7 +79,7 @@ size_t	get_current_time(void)
 	if (gettimeofday(&time, NULL) == -1)
 		return (write(2, "gettimeofday() error\n", 22), 0);
 	// printf("time is %ld \n", (time.tv_sec * 1000) + time.tv_usec);
-	return ((time.tv_sec * 1000) + time.tv_usec); // retourne 
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // retourne le resultat en milliseconde
 }
 
 // int	ft_usleep(t_philo *philo, long time)

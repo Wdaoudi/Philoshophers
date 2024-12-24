@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/24 14:59:54 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/24 16:17:38 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum s_state
 {
 	CONTINUE,
 	FINISH,
-} t_state;
+}					t_state;
 
 # define FORK "has taken a fork"
 # define EATING "is eating"
@@ -45,12 +45,12 @@ typedef enum s_state
 typedef struct s_data
 {
 	char			**av;
-	long			philo; // number_of_philo (1)
-	long			td; // time_to_die (2)
-	long			te; // time_to_eat (3)
-	long			ts; // time_to_sleep (4)
-	long			nftepme; // number_of_meal (5)
-	bool			flag; // if there is a number of meal necesssaire before end ("6")
+	long philo;   // number_of_philo (1)
+	long td;      // time_to_die (2)
+	long te;      // time_to_eat (3)
+	long ts;      // time_to_sleep (4)
+	long nftepme; // number_of_meal (5)
+	bool flag;    // if there is a number of meal necesssaire before end ("6")
 	long			starting_time;
 }					t_data;
 
@@ -73,7 +73,7 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 	int				id;
 	int				number_of_meal;
-	long long				last_meal_time;
+	long long		last_meal_time;
 	long			starting_time;
 	t_monitor		*monitor;
 	struct s_philo	*next;
@@ -103,22 +103,22 @@ t_state				set_simulation_finish(t_philo *philo);
 
 /* routine */
 
-void	*routine(void *arg);
-t_state	eat(t_philo *philo);
-t_state	take_fork(t_philo *philo);
-t_state	think(t_philo *philo);
-t_state	ft_sleep(t_philo *philo);
-
+void				*routine(void *arg);
+t_state				eat(t_philo *philo);
+t_state				take_fork(t_philo *philo);
+t_state				think(t_philo *philo);
+t_state				ft_sleep(t_philo *philo);
+t_state				check_if_all_ate_enough(t_monitor *monitor);
 
 /* utils*/
 
 void				ft_putstr_fd(char *s, int fd);
 void				ft_free_all(t_monitor *monitor);
 size_t				get_current_time(void);
-t_state	set_simulation_finish(t_philo *philo);
-t_state	get_simulation_state(t_philo *philo);
-t_state	check_if_dead(t_philo *philo);
-t_state	ft_printf(t_philo *philo, char *message);
+t_state				set_simulation_finish(t_philo *philo);
+t_state				get_simulation_state(t_philo *philo);
+t_state				check_if_dead(t_philo *philo);
+t_state				ft_printf(t_philo *philo, char *message);
 
 /* test*/
 
