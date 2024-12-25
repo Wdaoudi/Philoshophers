@@ -7,3 +7,13 @@ no die test:
 should end :
 necessite de gestion du cas ou il y a un nombre impair de philo
 - [5 800 200 200 7] | no one should die, simulation should stop after 7 eats
+
+
+- ./philo 4 500 200 2147483647 : attention un philo ne peut pas mourrir en 
+dormant reussir a gerer;
+- 
+
+valgrind --tool=helgrind :Helgrind can detect locking order violations, for most programs
+valgrind --tool=drd : DRD has support for detached threads
+
+./philo 3 410 200 200 = 2 doit mourrir a 410 voir temps de think
