@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/24 15:57:16 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:28:31 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ int	init_monitor(t_data *data, t_monitor *monitor)
 	monitor->first = NULL;
 	monitor->data->starting_time = get_current_time();
 	if (pthread_mutex_init(&monitor->die, NULL) != 0
-		|| pthread_mutex_init(&monitor->print, NULL) != 0
-		|| pthread_mutex_init(&monitor->meal_check, NULL) != 0)
+		|| pthread_mutex_init(&monitor->print, NULL) != 0)
 	{
 		return (1);
 	}
@@ -120,6 +119,7 @@ int	init_threads(t_monitor *monitor)
 		}
 		current = current->next;
 	}
+	// printf("jai fini !\n");
 	current = monitor->first;
 	while (current)
 	{

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/24 16:11:06 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:39:18 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ void	ft_free_all(t_monitor *monitor)
 	}
 	pthread_mutex_destroy(&monitor->die);
 	pthread_mutex_destroy(&monitor->print);
-	pthread_mutex_destroy(&monitor->meal_check);
 	// pthread_mutex_destroy(&monitor->first->fork);// boucler pour les philos
-	// pthread_mutex_destroy(&monitor->first->l_fork); // boucler pour les philos
+	// pthread_mutex_destroy(&monitor->first->l_fork);
+	// boucler pour les philos
 	// pthread_mutex_destroy(&monitor->first->r_fork);// boucler pour les philos
-	
-
 }
 
 size_t	get_current_time(void)
@@ -79,11 +77,23 @@ size_t	get_current_time(void)
 	if (gettimeofday(&time, NULL) == -1)
 		return (write(2, "gettimeofday() error\n", 22), 0);
 	// printf("time is %ld \n", (time.tv_sec * 1000) + time.tv_usec);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // retourne le resultat en milliseconde
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // milliseconde
+	// retourne le resultat en milliseconde
 }
 
-// int	ft_usleep(t_philo *philo, long time)
-// {
-// 	usleep(time);
-// 	return (0);
-// }
+t_state	ft_usleep(t_philo *philo, long time/*en milliseconde*/)
+{
+	long starting_time;
+	long actual_time;
+
+	starting_time = get_current_time(); // miliseconde
+	actual_time = get_current_time(); // milliseconde
+	while ((actual_time - starting_time) < time)
+	{
+		if (check_if_dead(philo) == FINISH)
+			return (FINISH);
+		usleep(100);// en useconde
+		actual_time = get_current_time();
+	}
+	return (CONTINUE);
+}

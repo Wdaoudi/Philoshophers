@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/25 15:24:12 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/25 21:19:10 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,90 +17,42 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		ft_usleep(philo, 1); // milliseconde
+	if (philo->monitor->data->philo == 1)
+		return (one_philo(philo),NULL);
 	while (1)
 	{
-		if (philo->monitor->data->flag == true
-			/*&& philo->number_of_meal == philo->monitor->data->nftepme*/)
-		{
-			if (check_if_all_ate_enough(philo/*->monitor*/) == FINISH)
-			{
-				printf("philo[%d] ate enough ate %d\n", philo->id,
-					philo->number_of_meal);
-				break ;
-			}
-		}
 		if (eat(philo) == FINISH)
 		{
-			// printf("philo[%d] is dead at %lu\n", philo->id, get_current_time()
-			// 	- philo->starting_time);
 			break ;
 		}
-		if (philo->monitor->data->flag == true
-			/*&& philo->number_of_meal == philo->monitor->data->nftepme*/)
+		if (philo->number_of_meal == philo->monitor->data->nftepme)
 		{
-			if (check_if_all_ate_enough(philo /*->monitor*/) == FINISH)
-			{
-				printf("philo[%d] ate enough ate %d\n", philo->id,
-					philo->number_of_meal);
+			printf("philo[%d] ate %d meal\n",philo->id, philo->number_of_meal);
 				break ;
-			}
 		}
 		if (ft_sleep(philo) == FINISH)
 		{
-			// printf("philo[%d] is dead at %lu\n", philo->id, get_current_time()
-			// 	- philo->starting_time);
 			break ;
 		}
 		if (think(philo) == FINISH)
 		{
-			// printf("philo[%d] is dead at %lu\n", philo->id, get_current_time()
-			// 	- philo->starting_time);
 			break ;
 		}
 	}
+	// pthread_mutex_unlock(&philo->monitor->print);
+	// pthread_mutex_unlock(&philo->monitor->die);
+	// pthread_mutex_unlock(&philo->monitor->meal_check);
 	return (NULL);
 }
-
-// t_state	take_fork(t_philo *philo)
-// {
-// 	if (check_if_dead(philo) == FINISH)
-// 		return (FINISH);
-// 	if (pthread_mutex_lock(philo->r_fork) != 0)
-// 		return (set_simulation_finish(philo));
-// 	if (check_if_dead(philo) == FINISH)
-// 		return (pthread_mutex_unlock(philo->r_fork), FINISH);
-// 	if (ft_printf(philo, FORK) == FINISH)
-// 		return (pthread_mutex_unlock(philo->r_fork), FINISH);
-// 	if (philo->monitor->data->philo == 1)
-// 	{
-// 		usleep(philo->monitor->data->td * 1000);
-// 		return (pthread_mutex_unlock(philo->r_fork), FINISH);
-// 	}
-// 	if (pthread_mutex_lock(philo->l_fork) != 0)
-// 		return (pthread_mutex_unlock(philo->r_fork),
-// 			set_simulation_finish(philo));
-// 	if (check_if_dead(philo) == FINISH)
-// 	{
-// 		pthread_mutex_unlock(philo->r_fork);
-// 		pthread_mutex_unlock(philo->l_fork);
-// 		return (FINISH);
-// 	}
-// 	if (ft_printf(philo, FORK) == FINISH)
-// 	{
-// 		pthread_mutex_unlock(philo->r_fork);
-// 		pthread_mutex_unlock(philo->l_fork);
-// 		return (FINISH);
-// 	}
-// 	return (CONTINUE);
-// }
-// tentative de ralentissement de la prise des fourchettes en focntiond e la position
 
 t_state	take_fork(t_philo *philo)
 {
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 != 0)
 	{
 		first_fork = philo->r_fork;
 		second_fork = philo->l_fork;
@@ -109,7 +61,6 @@ t_state	take_fork(t_philo *philo)
 	{
 		first_fork = philo->l_fork;
 		second_fork = philo->r_fork;
-		usleep(100); // ralentir la prise de decision
 	}
 	if (check_if_dead(philo) == FINISH)
 		return (FINISH);
@@ -119,52 +70,63 @@ t_state	take_fork(t_philo *philo)
 		return (pthread_mutex_unlock(first_fork), FINISH);
 	if (ft_printf(philo, FORK) == FINISH)
 		return (pthread_mutex_unlock(first_fork), FINISH);
-	if (philo->monitor->data->philo == 1)
-	{
-		usleep(philo->monitor->data->td * 1000);
-		return (pthread_mutex_unlock(first_fork), FINISH);
-	}
 	if (pthread_mutex_lock(second_fork) != 0)
 		return (pthread_mutex_unlock(first_fork), set_simulation_finish(philo));
 	if (check_if_dead(philo) == FINISH)
 	{
-		pthread_mutex_unlock(first_fork);
 		pthread_mutex_unlock(second_fork);
+		pthread_mutex_unlock(first_fork);
 		return (FINISH);
 	}
 	if (ft_printf(philo, FORK) == FINISH)
 	{
-		pthread_mutex_unlock(first_fork);
 		pthread_mutex_unlock(second_fork);
+		pthread_mutex_unlock(first_fork);
 		return (FINISH);
 	}
 	return (CONTINUE);
 }
+
+void	drop_forks(t_philo *philo)
+{
+	if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 != 0)
+	{
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(philo->l_fork);
+	}
+}
+
 t_state	eat(t_philo *philo)
 {
 	if (check_if_dead(philo) == FINISH)
 		return (FINISH);
 	if (take_fork(philo) == FINISH)
 		return (FINISH);
-	ft_printf(philo, EATING);
+	if (ft_printf(philo, EATING) == FINISH)
+		return (drop_forks(philo), FINISH);
 	philo->last_meal_time = get_current_time(); // en milliseconde
-	usleep(philo->monitor->data->te * 1000);
-	// passsage en useconde arguments de usleep
-	pthread_mutex_lock(&philo->monitor->meal_check);
+	if (ft_usleep(philo, philo->monitor->data->te) == FINISH)
+		return (drop_forks(philo), FINISH);
 	philo->number_of_meal += 1;
-	pthread_mutex_unlock(&philo->monitor->meal_check);
-	if (check_if_dead(philo) == FINISH)
-		return (pthread_mutex_unlock(philo->r_fork),
-			pthread_mutex_unlock(philo->l_fork), FINISH);
-	pthread_mutex_unlock(philo->r_fork);
-	pthread_mutex_unlock(philo->l_fork);
-	return (CONTINUE);
+	drop_forks(philo);
+	return (check_if_dead(philo));
 }
 
 t_state	think(t_philo *philo)
 {
+	if (check_if_dead(philo) == FINISH)
+		return (FINISH);
 	if (ft_printf(philo, THINKING) == FINISH)
 		return (FINISH);
+	if (philo->monitor->data->philo % 2 == 0)
+		ft_usleep(philo, philo->monitor->data->te - philo->monitor->data->ts);
+	else
+		ft_usleep(philo, (2 * philo->monitor->data->te) - philo->monitor->data->ts);
 	return (CONTINUE);
 }
 
@@ -174,7 +136,8 @@ t_state	ft_sleep(t_philo *philo)
 		return (FINISH);
 	if (ft_printf(philo, SLEEPING) == FINISH)
 		return (FINISH);
-	usleep(philo->monitor->data->ts * 1000); // * 1000 passage en useconde
+	if (ft_usleep(philo, philo->monitor->data->ts) == FINISH)
+		return (FINISH); // * 1000 passage en useconde
 	if (check_if_dead(philo) == FINISH)
 		return (FINISH);
 	return (CONTINUE);
@@ -192,33 +155,80 @@ t_state	get_simulation_state(t_philo *philo)
 
 t_state	set_simulation_finish(t_philo *philo)
 {
+	long	time;
+
 	pthread_mutex_lock(&philo->monitor->die);
 	if (philo->monitor->is_die != FINISH)
-		ft_printdead(philo, DIED);
+	{
+		pthread_mutex_lock(&philo->monitor->print);
+		time = get_current_time() - philo->monitor->data->starting_time;
+		printf("%lu %d %s\n", time, philo->id, DIED);
+		pthread_mutex_unlock(&philo->monitor->print);
+		// ft_printdead(philo, DIED);
+	}
 	philo->monitor->is_die = FINISH;
 	pthread_mutex_unlock(&philo->monitor->die);
 	return (FINISH);
 }
 
+// t_state	check_if_dead(t_philo *philo)
+// {
+// 	long	actual_time;
+// 	long	last_meal;
+// 	t_state state;
+
+// 	if (get_simulation_state(philo) == FINISH)
+// 		return (FINISH);
+
+// 	if (pthread_mutex_lock(&philo->monitor->meal_check) != 0)
+// 		return (set_simulation_finish(philo));
+// 	actual_time = get_current_time(); // en milliseconde
+// 	last_meal = philo->last_meal_time;
+// 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
+// 		return (pthread_mutex_unlock(&philo->monitor->meal_check),
+// 			set_simulation_finish(philo));
+// 	if (pthread_mutex_unlock(&philo->monitor->meal_check) != 0)
+// 		return (set_simulation_finish(philo));
+// 	return (CONTINUE);
+// }
+
 t_state	check_if_dead(t_philo *philo)
 {
 	long	actual_time;
 	long	last_meal;
+	t_state	state;
 
+	// t_philo	*temp;
+	(void)state;
 	if (get_simulation_state(philo) == FINISH)
 		return (FINISH);
-	if (pthread_mutex_lock(&philo->monitor->meal_check) != 0)
-		return (set_simulation_finish(philo));
 	actual_time = get_current_time(); // en milliseconde
 	last_meal = philo->last_meal_time;
+	// if (pthread_mutex_unlock(&philo->monitor->meal_check) != 0)
+	// 	return (set_simulation_finish(philo));
 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
-		return (pthread_mutex_unlock(&philo->monitor->meal_check),
-			set_simulation_finish(philo));
-	if (pthread_mutex_unlock(&philo->monitor->meal_check) != 0)
-		return (set_simulation_finish(philo));
+	{
+		pthread_mutex_lock(&philo->monitor->die);
+		if (philo->monitor->is_die != FINISH)
+		{
+			pthread_mutex_lock(&philo->monitor->print);
+			printf("%lu %d %s\n", get_current_time()
+				- philo->monitor->data->starting_time, philo->id, DIED);
+			pthread_mutex_unlock(&philo->monitor->print);
+			philo->monitor->is_die = FINISH;
+		}
+		pthread_mutex_unlock(&philo->monitor->die);
+		return (FINISH);
+	}
+	// temp = philo;
+	// while (temp)
+	// {
+	// 	printf("philo[%d] get state %d\n", temp->id,
+	// 		temp->monitor->is_die);
+	// 		temp = temp->next;
+	// }
 	return (CONTINUE);
 }
-
 // t_state	check_if_all_ate_enough(t_monitor *monitor)
 // {
 // 	t_philo *current;
@@ -236,15 +246,3 @@ t_state	check_if_dead(t_philo *philo)
 // 	pthread_mutex_unlock(&monitor->meal_check);
 // 	return (FINISH);
 // }
-
-t_state	check_if_all_ate_enough(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->monitor->meal_check);
-	if (philo->number_of_meal < philo->monitor->data->nftepme)
-	{
-		pthread_mutex_unlock(&philo->monitor->meal_check);
-		return (CONTINUE);
-	}
-	pthread_mutex_unlock(&philo->monitor->meal_check);
-	return (FINISH);
-}

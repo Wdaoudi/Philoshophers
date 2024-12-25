@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/25 15:15:34 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/25 21:16:36 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_monitor
 	pthread_mutex_t	die;
 	t_state			is_die;
 	pthread_mutex_t	print;
-	pthread_mutex_t	meal_check;
 	t_data			*data;
 
 }					t_monitor;
@@ -109,7 +108,6 @@ t_state				eat(t_philo *philo);
 t_state				take_fork(t_philo *philo);
 t_state				think(t_philo *philo);
 t_state				ft_sleep(t_philo *philo);
-t_state				check_if_all_ate_enough(/*t_monitor *monitor*/ t_philo *philo);
 
 /* utils*/
 
@@ -121,11 +119,14 @@ t_state				get_simulation_state(t_philo *philo);
 t_state				check_if_dead(t_philo *philo);
 t_state				ft_printf(t_philo *philo, char *message);
 void				ft_printdead(t_philo *philo, char *message);
+t_state				ft_usleep(t_philo *philo, long time);
 
 /* test*/
 
 void				print_list_philo(t_monitor *monitor);
-void				*test(void *arg);
+
+/* special*/
+void				one_philo(t_philo *philo);
 
 /*
 strcture table: avec dedans un  mutex pour le printf et
