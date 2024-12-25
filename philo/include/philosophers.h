@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/24 16:17:38 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/25 15:15:34 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef enum s_state
 # define EATING "is eating"
 # define SLEEPING "is sleeping"
 # define THINKING "is thinking"
+# define DIED "is died"
 
 typedef struct s_data
 {
@@ -108,7 +109,7 @@ t_state				eat(t_philo *philo);
 t_state				take_fork(t_philo *philo);
 t_state				think(t_philo *philo);
 t_state				ft_sleep(t_philo *philo);
-t_state				check_if_all_ate_enough(t_monitor *monitor);
+t_state				check_if_all_ate_enough(/*t_monitor *monitor*/ t_philo *philo);
 
 /* utils*/
 
@@ -119,6 +120,7 @@ t_state				set_simulation_finish(t_philo *philo);
 t_state				get_simulation_state(t_philo *philo);
 t_state				check_if_dead(t_philo *philo);
 t_state				ft_printf(t_philo *philo, char *message);
+void				ft_printdead(t_philo *philo, char *message);
 
 /* test*/
 
