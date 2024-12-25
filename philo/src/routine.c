@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/25 15:19:12 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/25 15:24:12 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	*routine(void *arg)
 		{
 			if (check_if_all_ate_enough(philo /*->monitor*/) == FINISH)
 			{
-				// printf("philo[%d] ate enough ate %d\n", philo->id,
-				// 	philo->number_of_meal);
+				printf("philo[%d] ate enough ate %d\n", philo->id,
+					philo->number_of_meal);
 				break ;
 			}
 		}
