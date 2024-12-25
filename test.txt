@@ -1,0 +1,9 @@
+no die test:
+- 5 600 150 150
+- 5 800 200 200
+- 200 800 200 200
+
+
+should end :
+necessite de gestion du cas ou il y a un nombre impair de philo
+- [5 800 200 200 7] | no one should die, simulation should stop after 7 eats
