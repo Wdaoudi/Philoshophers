@@ -15,5 +15,24 @@ dormant reussir a gerer;
 
 valgrind --tool=helgrind :Helgrind can detect locking order violations, for most programs
 valgrind --tool=drd : DRD has support for detached threads
+valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all 
+
 
 ./philo 3 410 200 200 = 2 doit mourrir a 410 voir temps de think
+
+
+valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all :
+
+- 1 180 60 60 5
+- 1 180 181 60 5
+- 18 180 85 85 10
+- 3 210 65 135 10
+- 3 210 60 145 10
+
+valgrind --tool=helgrind :
+
+- 1 180 60 60 5 
+- 1 180 181 60 5
+- 8 180 85 10
+- 3 210 65 135 10
+- 3 210 60 145 10
