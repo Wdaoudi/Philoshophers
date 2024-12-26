@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/25 21:19:10 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:48:02 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,21 @@ void	*routine(void *arg)
 	if (philo->id % 2 == 0)
 		ft_usleep(philo, 1); // milliseconde
 	if (philo->monitor->data->philo == 1)
-		return (one_philo(philo),NULL);
+		return (one_philo(philo), NULL);
 	while (1)
 	{
 		if (eat(philo) == FINISH)
-		{
 			break ;
-		}
 		if (philo->number_of_meal == philo->monitor->data->nftepme)
 		{
-			printf("philo[%d] ate %d meal\n",philo->id, philo->number_of_meal);
-				break ;
+			// printf("philo[%d] ate %d meal\n", philo->id, philo->number_of_meal);
+			break ;
 		}
 		if (ft_sleep(philo) == FINISH)
-		{
 			break ;
-		}
 		if (think(philo) == FINISH)
-		{
 			break ;
-		}
 	}
-	// pthread_mutex_unlock(&philo->monitor->print);
-	// pthread_mutex_unlock(&philo->monitor->die);
-	// pthread_mutex_unlock(&philo->monitor->meal_check);
 	return (NULL);
 }
 
@@ -52,16 +43,18 @@ t_state	take_fork(t_philo *philo)
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 != 0)
-	{
-		first_fork = philo->r_fork;
-		second_fork = philo->l_fork;
-	}
-	else
-	{
-		first_fork = philo->l_fork;
-		second_fork = philo->r_fork;
-	}
+	// if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 != 0)
+	// {
+	// 	first_fork = philo->r_fork;
+	// 	second_fork = philo->l_fork;
+	// }
+	// else
+	// {
+	// 	first_fork = philo->l_fork;
+	// 	second_fork = philo->r_fork;
+	// }
+	first_fork = get_first_fork(philo);
+	second_fork = get_second_fork(philo);
 	if (check_if_dead(philo) == FINISH)
 		return (FINISH);
 	if (pthread_mutex_lock(first_fork) != 0)
@@ -72,25 +65,27 @@ t_state	take_fork(t_philo *philo)
 		return (pthread_mutex_unlock(first_fork), FINISH);
 	if (pthread_mutex_lock(second_fork) != 0)
 		return (pthread_mutex_unlock(first_fork), set_simulation_finish(philo));
-	if (check_if_dead(philo) == FINISH)
+	if (check_if_dead(philo) == FINISH || ft_printf(philo, FORK) == FINISH)
 	{
-		pthread_mutex_unlock(second_fork);
-		pthread_mutex_unlock(first_fork);
+		// pthread_mutex_unlock(second_fork);
+		// pthread_mutex_unlock(first_fork);
+		drop_forks(philo);
 		return (FINISH);
 	}
-	if (ft_printf(philo, FORK) == FINISH)
-	{
-		pthread_mutex_unlock(second_fork);
-		pthread_mutex_unlock(first_fork);
-		return (FINISH);
-	}
+	// if (ft_printf(philo, FORK) == FINISH)
+	// {
+	// 	pthread_mutex_unlock(second_fork);
+	// 	pthread_mutex_unlock(first_fork);
+	// 	drop_forks(philo);
+	// 	return (FINISH);
+	// }
 	return (CONTINUE);
 }
 
 void	drop_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 != 0)
-	{
+	if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 == 0)
+	{ // philo.monitor.data.philo %2 != 0
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 	}
@@ -126,7 +121,8 @@ t_state	think(t_philo *philo)
 	if (philo->monitor->data->philo % 2 == 0)
 		ft_usleep(philo, philo->monitor->data->te - philo->monitor->data->ts);
 	else
-		ft_usleep(philo, (2 * philo->monitor->data->te) - philo->monitor->data->ts);
+		ft_usleep(philo, (2 * philo->monitor->data->te)
+			- philo->monitor->data->ts);
 	return (CONTINUE);
 }
 
@@ -164,7 +160,6 @@ t_state	set_simulation_finish(t_philo *philo)
 		time = get_current_time() - philo->monitor->data->starting_time;
 		printf("%lu %d %s\n", time, philo->id, DIED);
 		pthread_mutex_unlock(&philo->monitor->print);
-		// ft_printdead(philo, DIED);
 	}
 	philo->monitor->is_die = FINISH;
 	pthread_mutex_unlock(&philo->monitor->die);
@@ -196,16 +191,11 @@ t_state	check_if_dead(t_philo *philo)
 {
 	long	actual_time;
 	long	last_meal;
-	t_state	state;
 
-	// t_philo	*temp;
-	(void)state;
 	if (get_simulation_state(philo) == FINISH)
 		return (FINISH);
 	actual_time = get_current_time(); // en milliseconde
 	last_meal = philo->last_meal_time;
-	// if (pthread_mutex_unlock(&philo->monitor->meal_check) != 0)
-	// 	return (set_simulation_finish(philo));
 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
 	{
 		pthread_mutex_lock(&philo->monitor->die);
@@ -220,29 +210,5 @@ t_state	check_if_dead(t_philo *philo)
 		pthread_mutex_unlock(&philo->monitor->die);
 		return (FINISH);
 	}
-	// temp = philo;
-	// while (temp)
-	// {
-	// 	printf("philo[%d] get state %d\n", temp->id,
-	// 		temp->monitor->is_die);
-	// 		temp = temp->next;
-	// }
 	return (CONTINUE);
 }
-// t_state	check_if_all_ate_enough(t_monitor *monitor)
-// {
-// 	t_philo *current;
-// 	pthread_mutex_lock(&monitor->meal_check);
-// 	current = monitor->first;
-// 	while (current)
-// 	{
-// 		if (current->number_of_meal < monitor->data->nftepme)
-// 		{
-// 			pthread_mutex_unlock(&monitor->meal_check);
-// 			return (CONTINUE);
-// 		}
-// 		current = current->next;
-// 	}
-// 	pthread_mutex_unlock(&monitor->meal_check);
-// 	return (FINISH);
-// }

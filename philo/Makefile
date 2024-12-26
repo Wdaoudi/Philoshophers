@@ -6,7 +6,7 @@
 #    By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 19:24:45 by wdaoudi-          #+#    #+#              #
-#    Updated: 2024/12/25 16:04:19 by wdaoudi-         ###   ########.fr        #
+#    Updated: 2024/12/26 12:37:18 by wdaoudi-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ INCLUDES = ./includes
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -pthread -g3
+SANITIZE = -fsanitize=thread -g
+
 
 NAME = philo
 
@@ -38,5 +40,8 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+tsan: CFLAGS += $(SANITIZE)
+tsan: re
 
 .PHONY: all clean fclean re

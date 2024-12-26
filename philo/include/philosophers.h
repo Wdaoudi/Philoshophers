@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/25 21:16:36 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:13:38 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	pthread_mutex_t	fork;
-	pthread_mutex_t	*l_fork;
+	pthread_mutex_t *l_fork; // pas a destroy simple pointeur jusqu a fork
 	pthread_mutex_t	*r_fork;
 	int				id;
 	int				number_of_meal;
@@ -108,6 +108,7 @@ t_state				eat(t_philo *philo);
 t_state				take_fork(t_philo *philo);
 t_state				think(t_philo *philo);
 t_state				ft_sleep(t_philo *philo);
+t_state				ft_usleep(t_philo *philo, long time);
 
 /* utils*/
 
@@ -119,7 +120,7 @@ t_state				get_simulation_state(t_philo *philo);
 t_state				check_if_dead(t_philo *philo);
 t_state				ft_printf(t_philo *philo, char *message);
 void				ft_printdead(t_philo *philo, char *message);
-t_state				ft_usleep(t_philo *philo, long time);
+void				ft_free_all(t_monitor *monitor);
 
 /* test*/
 
@@ -127,6 +128,9 @@ void				print_list_philo(t_monitor *monitor);
 
 /* special*/
 void				one_philo(t_philo *philo);
+pthread_mutex_t		*get_first_fork(t_philo *philo);
+pthread_mutex_t		*get_second_fork(t_philo *philo);
+void				drop_forks(t_philo *philo);
 
 /*
 strcture table: avec dedans un  mutex pour le printf et
