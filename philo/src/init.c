@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/25 20:28:31 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:22:57 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ t_philo	*create_philo(t_monitor *monitor, int i)
 	new = malloc(sizeof(t_philo));
 	if (!new)
 		return (NULL);
-	if (pthread_mutex_init(&new->fork, NULL) != 0)
+	if (pthread_mutex_init(&new->fork, NULL) != 0
+		|| pthread_mutex_init(&new->meal_time, NULL) != 0)
 	{
 		free(new);
 		return (NULL);

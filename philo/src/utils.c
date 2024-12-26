@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 11:35:01 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:29:18 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_free_all(t_monitor *monitor)
 		{
 			next = current->next;
 			pthread_mutex_destroy(&current->fork);
+			pthread_mutex_destroy(&current->meal_time);
 			free(current);
 			current = next;
 		}
@@ -67,9 +68,7 @@ size_t	get_current_time(void)
 
 	if (gettimeofday(&time, NULL) == -1)
 		return (write(2, "gettimeofday() error\n", 22), 0);
-	// printf("time is %ld \n", (time.tv_sec * 1000) + time.tv_usec);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // milliseconde
-															// retourne le resultat en milliseconde
 }
 
 t_state	ft_usleep(t_philo *philo, long time /*en milliseconde*/)

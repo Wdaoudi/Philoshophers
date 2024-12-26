@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 12:13:38 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:29:35 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_philo
 	pthread_mutex_t	fork;
 	pthread_mutex_t *l_fork; // pas a destroy simple pointeur jusqu a fork
 	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	meal_time;
 	int				id;
 	int				number_of_meal;
 	long long		last_meal_time;

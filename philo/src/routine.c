@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 12:48:02 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:50:49 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@ t_state	take_fork(t_philo *philo)
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	// if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 != 0)
-	// {
-	// 	first_fork = philo->r_fork;
-	// 	second_fork = philo->l_fork;
-	// }
-	// else
-	// {
-	// 	first_fork = philo->l_fork;
-	// 	second_fork = philo->r_fork;
-	// }
 	first_fork = get_first_fork(philo);
 	second_fork = get_second_fork(philo);
 	if (check_if_dead(philo) == FINISH)
@@ -67,25 +57,16 @@ t_state	take_fork(t_philo *philo)
 		return (pthread_mutex_unlock(first_fork), set_simulation_finish(philo));
 	if (check_if_dead(philo) == FINISH || ft_printf(philo, FORK) == FINISH)
 	{
-		// pthread_mutex_unlock(second_fork);
-		// pthread_mutex_unlock(first_fork);
 		drop_forks(philo);
 		return (FINISH);
 	}
-	// if (ft_printf(philo, FORK) == FINISH)
-	// {
-	// 	pthread_mutex_unlock(second_fork);
-	// 	pthread_mutex_unlock(first_fork);
-	// 	drop_forks(philo);
-	// 	return (FINISH);
-	// }
 	return (CONTINUE);
 }
 
 void	drop_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0 || philo->monitor->data->philo % 2 == 0)
-	{ // philo.monitor.data.philo %2 != 0
+	if (philo->id % 2 == 0 /* || philo->monitor->data->philo % 2 == 0*/)
+	{
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 	}
@@ -104,7 +85,9 @@ t_state	eat(t_philo *philo)
 		return (FINISH);
 	if (ft_printf(philo, EATING) == FINISH)
 		return (drop_forks(philo), FINISH);
-	philo->last_meal_time = get_current_time(); // en milliseconde
+	pthread_mutex_lock(&philo->meal_time);
+	philo->last_meal_time = get_current_time();
+	pthread_mutex_unlock(&philo->meal_time);
 	if (ft_usleep(philo, philo->monitor->data->te) == FINISH)
 		return (drop_forks(philo), FINISH);
 	philo->number_of_meal += 1;
@@ -133,7 +116,7 @@ t_state	ft_sleep(t_philo *philo)
 	if (ft_printf(philo, SLEEPING) == FINISH)
 		return (FINISH);
 	if (ft_usleep(philo, philo->monitor->data->ts) == FINISH)
-		return (FINISH); // * 1000 passage en useconde
+		return (FINISH);
 	if (check_if_dead(philo) == FINISH)
 		return (FINISH);
 	return (CONTINUE);
@@ -166,27 +149,6 @@ t_state	set_simulation_finish(t_philo *philo)
 	return (FINISH);
 }
 
-// t_state	check_if_dead(t_philo *philo)
-// {
-// 	long	actual_time;
-// 	long	last_meal;
-// 	t_state state;
-
-// 	if (get_simulation_state(philo) == FINISH)
-// 		return (FINISH);
-
-// 	if (pthread_mutex_lock(&philo->monitor->meal_check) != 0)
-// 		return (set_simulation_finish(philo));
-// 	actual_time = get_current_time(); // en milliseconde
-// 	last_meal = philo->last_meal_time;
-// 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
-// 		return (pthread_mutex_unlock(&philo->monitor->meal_check),
-// 			set_simulation_finish(philo));
-// 	if (pthread_mutex_unlock(&philo->monitor->meal_check) != 0)
-// 		return (set_simulation_finish(philo));
-// 	return (CONTINUE);
-// }
-
 t_state	check_if_dead(t_philo *philo)
 {
 	long	actual_time;
@@ -194,10 +156,12 @@ t_state	check_if_dead(t_philo *philo)
 
 	if (get_simulation_state(philo) == FINISH)
 		return (FINISH);
-	actual_time = get_current_time(); // en milliseconde
+	pthread_mutex_lock(&philo->meal_time);
+	actual_time = get_current_time();
 	last_meal = philo->last_meal_time;
 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
 	{
+		pthread_mutex_unlock(&philo->meal_time);
 		pthread_mutex_lock(&philo->monitor->die);
 		if (philo->monitor->is_die != FINISH)
 		{
@@ -210,5 +174,6 @@ t_state	check_if_dead(t_philo *philo)
 		pthread_mutex_unlock(&philo->monitor->die);
 		return (FINISH);
 	}
+	pthread_mutex_unlock(&philo->meal_time);
 	return (CONTINUE);
 }

@@ -20,7 +20,7 @@ INCLUDES = ./includes
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror -pthread -g3
-SANITIZE = -fsanitize=thread -g
+SANITIZE = -pthread -g
 
 
 NAME = philo
