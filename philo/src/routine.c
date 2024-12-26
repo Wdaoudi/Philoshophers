@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 13:50:49 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:33:16 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ t_state	set_simulation_finish(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->monitor->print);
 		time = get_current_time() - philo->monitor->data->starting_time;
-		printf("%lu %d %s\n", time, philo->id, DIED);
+		printf("%lums %d %s\n", time, philo->id, DIED);
 		pthread_mutex_unlock(&philo->monitor->print);
 	}
 	philo->monitor->is_die = FINISH;
