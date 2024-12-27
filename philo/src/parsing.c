@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:53:50 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:19:15 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:42:09 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	parsing_argument(char **av, t_data *data)
 
 	i = 0;
 	i = 1;
+	if (ft_atoi_spe(av[1]) == 0 || ft_atoi_spe(av[1]) > 500)
+		return (1);
 	while (av[i])
 	{
 		if (is_right_argument(av[i]) == 1)

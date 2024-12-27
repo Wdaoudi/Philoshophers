@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:46:11 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:46:29 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ t_state	eat(t_philo *philo)
 		return (FINISH);
 	if (ft_printf(philo, EATING) == FINISH)
 		return (drop_forks(philo), FINISH);
-	pthread_mutex_lock(&philo->meal_time);
 	philo->last_meal_time = get_current_time();
-	pthread_mutex_unlock(&philo->meal_time);
 	if (ft_usleep(philo, philo->monitor->data->te) == FINISH)
 		return (drop_forks(philo), FINISH);
 	philo->number_of_meal += 1;
@@ -89,12 +87,10 @@ t_state	check_if_dead(t_philo *philo)
 
 	if (get_simulation_state(philo) == FINISH)
 		return (FINISH);
-	pthread_mutex_lock(&philo->meal_time);
 	actual_time = get_current_time();
 	last_meal = philo->last_meal_time;
 	if ((actual_time - philo->last_meal_time) >= philo->monitor->data->td)
 	{
-		pthread_mutex_unlock(&philo->meal_time);
 		pthread_mutex_lock(&philo->monitor->die);
 		if (philo->monitor->is_die != FINISH)
 		{
@@ -107,6 +103,5 @@ t_state	check_if_dead(t_philo *philo)
 		pthread_mutex_unlock(&philo->monitor->die);
 		return (FINISH);
 	}
-	pthread_mutex_unlock(&philo->meal_time);
 	return (CONTINUE);
 }

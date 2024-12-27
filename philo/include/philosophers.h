@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:17:15 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:54:29 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_monitor
 	t_state			is_die;
 	pthread_mutex_t	print;
 	t_data			*data;
-
 }					t_monitor;
 
 typedef struct s_philo
@@ -63,7 +62,6 @@ typedef struct s_philo
 	pthread_mutex_t	fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	meal_time;
 	int				id;
 	int				number_of_meal;
 	long long		last_meal_time;
@@ -114,6 +112,7 @@ t_state				check_if_dead(t_philo *philo);
 t_state				ft_printf(t_philo *philo, char *message);
 void				ft_printdead(t_philo *philo, char *message);
 void				ft_free_all(t_monitor *monitor);
+int					fail_pthread_create(t_monitor *monitor, t_philo *current);
 
 /* test*/
 

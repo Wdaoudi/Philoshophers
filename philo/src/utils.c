@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:03:21 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:08:38 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	ft_free_all(t_monitor *monitor)
 		{
 			next = current->next;
 			pthread_mutex_destroy(&current->fork);
-			pthread_mutex_destroy(&current->meal_time);
 			free(current);
 			current = next;
 		}

@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:20:29 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:25:14 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:54:05 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	init_threads(t_monitor *monitor)
 		if (pthread_create(&current->thread, NULL, &routine,
 				(void *)current) != 0)
 		{
-			printf("Failed to create thread for philo %d\n", current->id);
-			return (1);
+			if (fail_pthread_create(monitor, current) == 1)
+				return (1);
 		}
 		current = current->next;
 	}
@@ -104,4 +104,25 @@ t_state	take_fork(t_philo *philo)
 		return (FINISH);
 	}
 	return (CONTINUE);
+}
+
+int	fail_pthread_create(t_monitor *monitor, t_philo *current)
+{
+	t_philo *error;
+
+	printf("Failed to create thread for philo %d\n", current->id);
+	pthread_mutex_lock(&monitor->die);
+	monitor->is_die = FINISH;
+	pthread_mutex_unlock(&monitor->die);
+	error = monitor->first;
+	while (error != current)
+	{
+		if (pthread_join(error->thread, NULL) != 0)
+		{
+			printf("Failed to join thread for philosopher %d\n", current->id);
+			return (1);
+		}
+		error = error->next;
+	}
+	return (1);
 }
