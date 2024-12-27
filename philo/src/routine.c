@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:01:46 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:25:18 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:46:11 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_state	check_if_dead(t_philo *philo)
 		if (philo->monitor->is_die != FINISH)
 		{
 			pthread_mutex_lock(&philo->monitor->print);
-			printf("%lums %d %s\n", get_current_time()
+			printf("%lu %d %s\n", get_current_time()
 				- philo->monitor->data->starting_time, philo->id, DIED);
 			pthread_mutex_unlock(&philo->monitor->print);
 			philo->monitor->is_die = FINISH;

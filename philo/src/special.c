@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 14:22:48 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/27 14:22:34 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:45:51 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	one_philo(t_philo *philo)
 {
 	ft_printf(philo, FORK);
 	ft_usleep(philo, philo->monitor->data->td);
-	printf("%lums %d %s\n", get_current_time()
+	printf("%lu %d %s\n", get_current_time()
 		- philo->monitor->data->starting_time, philo->id, DIED);
 	return ;
 }
