@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:17:17 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 13:29:18 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:03:21 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,21 @@ size_t	get_current_time(void)
 
 	if (gettimeofday(&time, NULL) == -1)
 		return (write(2, "gettimeofday() error\n", 22), 0);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000)); // milliseconde
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-t_state	ft_usleep(t_philo *philo, long time /*en milliseconde*/)
+t_state	ft_usleep(t_philo *philo, long time)
 {
 	long	starting_time;
 	long	actual_time;
 
-	starting_time = get_current_time(); // miliseconde
-	actual_time = get_current_time();   // milliseconde
+	starting_time = get_current_time();
+	actual_time = get_current_time();
 	while ((actual_time - starting_time) < time)
 	{
 		if (check_if_dead(philo) == FINISH)
 			return (FINISH);
-		usleep(100); // en useconde
+		usleep(100);
 		actual_time = get_current_time();
 	}
 	return (CONTINUE);

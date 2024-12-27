@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 15:02:09 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 14:22:12 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:19:27 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_state	ft_printf(t_philo *philo, char *message)
 
 void	ft_printdead(t_philo *philo, char *message)
 {
-	size_t time;
+	size_t	time;
 
 	time = get_current_time() - philo->monitor->data->starting_time;
 	printf("%lu %d %s\n", time, philo->id, message);

@@ -6,14 +6,14 @@
 #    By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 19:24:45 by wdaoudi-          #+#    #+#              #
-#    Updated: 2024/12/26 14:25:23 by wdaoudi-         ###   ########.fr        #
+#    Updated: 2024/12/27 14:21:11 by wdaoudi-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 SRCS = $(addprefix src/, main.c parsing.c utils.c init.c routine.c write.c \
- special.c )
+ special.c utils2.c )
 
 INCLUDES = ./includes
 

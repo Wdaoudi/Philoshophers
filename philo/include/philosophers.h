@@ -6,12 +6,12 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 19:26:26 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 13:29:35 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:17:15 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
 # include <errno.h>
 # include <limits.h>
@@ -23,13 +23,11 @@
 # include <time.h>
 # include <unistd.h>
 
-// typedef struct s_fork
-// {
-// 	pthread_mutex_t fork_lock; // quand un philo predns il lock
-// 	bool				in_use;
-// 	/* si la fourchette de droite n est pas dispo il unock
-// 	sa fourchette pour eviter les deadlocks */
-// }						t_fork;
+# define FORK "has taken a fork"
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
+# define DIED "is died"
 
 typedef enum s_state
 {
@@ -37,21 +35,15 @@ typedef enum s_state
 	FINISH,
 }					t_state;
 
-# define FORK "has taken a fork"
-# define EATING "is eating"
-# define SLEEPING "is sleeping"
-# define THINKING "is thinking"
-# define DIED "is died"
-
 typedef struct s_data
 {
 	char			**av;
-	long philo;   // number_of_philo (1)
-	long td;      // time_to_die (2)
-	long te;      // time_to_eat (3)
-	long ts;      // time_to_sleep (4)
-	long nftepme; // number_of_meal (5)
-	bool flag;    // if there is a number of meal necesssaire before end ("6")
+	long			philo;
+	long			td;
+	long			te;
+	long			ts;
+	long			nftepme;
+	bool			flag;
 	long			starting_time;
 }					t_data;
 
@@ -69,7 +61,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	pthread_mutex_t	fork;
-	pthread_mutex_t *l_fork; // pas a destroy simple pointeur jusqu a fork
+	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	meal_time;
 	int				id;
@@ -132,35 +124,5 @@ void				one_philo(t_philo *philo);
 pthread_mutex_t		*get_first_fork(t_philo *philo);
 pthread_mutex_t		*get_second_fork(t_philo *philo);
 void				drop_forks(t_philo *philo);
-
-/*
-strcture table: avec dedans un  mutex pour le printf et
-un thread avec un superviseur en boleen qui dis si oui ou
-on conitinue dans le cas ou un philo meurt on stop tout
-
-
-structure d une liste chainee un maillon= un philo:
-
-un philo peut mourrir en mangeant donc necessaire de
-prednre en compte le temps de nourrissement
-
-
-attention usleep en microsecond donc
-usleep(time_to_sleep * 1000);
-
-printf X has taken a fork // seulement si le philo a deux fourchette
-
-
-usleep apres la creation d un thread pour lancer une routine
-1 millisecond
-
-
-time_to_think = (time_to_die - (get_time_in_ms() - philo->last_meal)
-		- time_to_eat) / 2
-necessaire pour laisser certains philo manger. mais pas superieur
-a 500 / 600 ms
-
-
-*/
 
 #endif

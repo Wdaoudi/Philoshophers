@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:02:58 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 13:22:57 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:21:29 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,35 +101,6 @@ int	init_monitor(t_data *data, t_monitor *monitor)
 		|| pthread_mutex_init(&monitor->print, NULL) != 0)
 	{
 		return (1);
-	}
-	return (0);
-}
-
-int	init_threads(t_monitor *monitor)
-{
-	t_philo	*current;
-
-	current = monitor->first;
-	while (current)
-	{
-		if (pthread_create(&current->thread, NULL, &routine,
-				(void *)current) != 0)
-		{
-			printf("Failed to create thread for philo %d\n", current->id);
-			return (1);
-		}
-		current = current->next;
-	}
-	// printf("jai fini !\n");
-	current = monitor->first;
-	while (current)
-	{
-		if (pthread_join(current->thread, NULL) != 0)
-		{
-			printf("Failed to join thread for philosopher %d\n", current->id);
-			return (1);
-		}
-		current = current->next;
 	}
 	return (0);
 }

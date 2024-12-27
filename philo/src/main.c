@@ -6,7 +6,7 @@
 /*   By: wdaoudi- <wdaoudi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 14:52:24 by wdaoudi-          #+#    #+#             */
-/*   Updated: 2024/12/26 11:35:38 by wdaoudi-         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:21:44 by wdaoudi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ int	main(int ac, char **av)
 		return (printf("Error\nCreating philosophers\n"), 1);
 	if (assign_forks(&monitor) != 0)
 		return (1);
-	
 	init_threads(&monitor);
-	// print_list_philo(&monitor);
 	ft_free_all(&monitor);
-	// pthread_mutex_destroy();
 	return (0);
 }
 
@@ -61,8 +58,7 @@ size_t	get_current_time(void)
 }
 */
 
-
 /*
-gerer la memoire: 
+gerer la memoire:
  - free la liste chainee de philo
  - destroy les different mutex (4 poour le moment)*/
